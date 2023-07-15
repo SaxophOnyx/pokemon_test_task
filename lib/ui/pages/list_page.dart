@@ -39,7 +39,22 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: BlocBuilder<ListBloc, ListState>(
+            bloc: bloc,
+            builder: (context, state) {
+              if (state.isLoading) {
+                return Text('Loading...');
+              }
+
+              if (state.error != null) {
+                return Text('');
+              }
+
+              return Text('Page ${state.data.pageNumber}');
+            },
+          ),
+        ),
         body: BlocBuilder<ListBloc, ListState>(
           bloc: bloc,
           builder: (context, state) {
@@ -53,7 +68,7 @@ class _ListPageState extends State<ListPage> {
 
             return _buildNormalState(context, state);
           },
-        ),
+        )
       ),
     );
   }

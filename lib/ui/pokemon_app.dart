@@ -13,6 +13,13 @@ class PokemonApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       home: ListPage(service: service),
+      theme: _createTheme(),
+    );
+  }
+
+  ThemeData _createTheme() {
+    return ThemeData(
+      primarySwatch: Colors.green
     );
   }
 }
