@@ -90,7 +90,9 @@ class _DetailsPageState extends State<DetailsPage> {
       children: [
         Expanded(
           flex: 2,
-          child: Center(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+            alignment: Alignment.center,
             child: AspectRatio(
               aspectRatio: 1,
               child: Container(
@@ -105,19 +107,24 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
           )
         ),
+        Container(
+          margin: EdgeInsets.only(bottom: 30),
+          child: Text(
+            pokemon.name,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).primaryColor
+            )
+          ),
+        ),
         Expanded(
           flex: 3,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 40),
             child: Table(
-              border: TableBorder.symmetric(
-                inside: BorderSide(),
-              ),
               children: [
-                _buildTableRow(context, 'Name', pokemon.name),
-                _buildTableRow(context, 'Types', _getTypesString(pokemon.types)),
-                _buildTableRow(context, 'Weight (kg)', pokemon.weight.toString()),
-                _buildTableRow(context, 'Height (cm)', pokemon.height.toString())
+                _buildTableRow(context, 'Type(s)', _getTypesString(pokemon.types)),
+                _buildTableRow(context, 'Height (cm)', '${pokemon.height}'),
+                _buildTableRow(context, 'Weight (kg)', '${pokemon.weight}'),
               ],
             ),
           )
@@ -130,15 +137,27 @@ class _DetailsPageState extends State<DetailsPage> {
     return TableRow(
       children: [
         Container(
+          padding: EdgeInsets.all(10),
           alignment: Alignment.center,
-          constraints: BoxConstraints(minHeight: 40),
-          child: Text(key)
+          child: Text(
+            key,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18
+            ),
+          ),
         ),
         Container(
-          alignment: Alignment.center,
-          constraints: BoxConstraints(minHeight: 40),
-          child: Text(value)
-        ),
+          padding: EdgeInsets.all(10),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontSize: 18
+            ),
+          ),
+        )
       ]
     );
   }

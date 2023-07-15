@@ -16,13 +16,11 @@ class _PageNumberInputDialogState extends State<PageNumberInputDialog> {
   @override
   void initState() {
     super.initState();
-    debugPrint('InitState');
     _controller = TextEditingController();
   }
 
   @override
   void dispose() {
-    debugPrint('Dispose');
     _controller.dispose();
     super.dispose();
   }
@@ -35,7 +33,6 @@ class _PageNumberInputDialogState extends State<PageNumberInputDialog> {
         controller: _controller,
         onSubmitted: (value) {
           if (_controller.text.isNotEmpty) {
-            debugPrint('OnSubmitted');
             Navigator.of(context).pop(int.parse(_controller.text));
           }
         },

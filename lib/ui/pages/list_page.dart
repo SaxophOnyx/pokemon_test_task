@@ -49,7 +49,7 @@ class _ListPageState extends State<ListPage> {
               }
 
               if (state.error != null) {
-                return Text('');
+                return Text('Error...');
               }
 
               return Text('Page ${state.data.pageNumber}');
@@ -87,15 +87,9 @@ class _ListPageState extends State<ListPage> {
 
   Widget _buildErrorState(BuildContext context, ListState state) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('An error occured!'),
-          ElevatedButton(
-            onPressed: () => bloc.add(ShowExactPageEvent(1)),
-            child: Text('Try reload')
-          )
-        ],
+      child: Text(
+        'Page Not Found',
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     );
   }
@@ -104,7 +98,6 @@ class _ListPageState extends State<ListPage> {
     return GestureDetector(
       onHorizontalDragEnd: (details) => _onListHorizontalDragEnd(context, details),
       child: ListView.builder(
-        padding: EdgeInsets.only(bottom: 5),
         itemCount: state.data.pokemonNames.length,
         itemBuilder: (context, index) => _buildListItem(context, index, state.data.pokemonNames[index])
       ),
@@ -125,21 +118,18 @@ class _ListPageState extends State<ListPage> {
       child: Container(
         alignment: Alignment.center,
         constraints: BoxConstraints(minHeight: 50),
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: (index % 2 == 0) ? null : Color.fromARGB(255, 230, 230, 230)
+        color: (index % 2 == 0) ? null : Color.fromARGB(255, 230, 230, 230),
+        child: Text(
+          pokemonName,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
-        margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
-        child: Text(pokemonName),
       ),
     );
   }
 
   void _onListHorizontalDragEnd(BuildContext context, DragEndDetails details) {
     if (details.primaryVelocity != null) {
-      debugPrint('Dragged');
       final currPageNumber = bloc.state.data.pageNumber;
-
       if (details.primaryVelocity! < 0) {
         bloc.add(ShowNextPageEvent());
       } else {
