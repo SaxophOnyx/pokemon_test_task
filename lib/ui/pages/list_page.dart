@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_test_task/app/contracts/service/i_pokemon_service.dart';
@@ -27,7 +25,7 @@ class _ListPageState extends State<ListPage> {
     bloc = ListBloc(
       service: widget.service,
       initialState: ListState.loading()
-    )..add(ShowExactPageEvent(1));
+    )..add(const ShowExactPageEvent(1));
   }
 
   @override
@@ -45,11 +43,11 @@ class _ListPageState extends State<ListPage> {
             bloc: bloc,
             builder: (context, state) {
               if (state.isLoading) {
-                return Text('Loading...');
+                return const Text('Loading...');
               }
 
               if (state.error != null) {
-                return Text('Error...');
+                return const Text('Error...');
               }
 
               return Text('Page ${state.data.pageNumber}');
@@ -72,15 +70,15 @@ class _ListPageState extends State<ListPage> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => _onSelectPagePressed(context),
-          shape: BeveledRectangleBorder(),
-          label: Text('Select Page'),
+          shape: const BeveledRectangleBorder(),
+          label: const Text('Select Page'),
         )
       ),
     );
   }
 
   Widget _buildLoadingState(BuildContext context, ListState state) {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator()
     );
   }
@@ -117,8 +115,8 @@ class _ListPageState extends State<ListPage> {
       },
       child: Container(
         alignment: Alignment.center,
-        constraints: BoxConstraints(minHeight: 50),
-        color: (index % 2 == 0) ? null : Color.fromARGB(255, 230, 230, 230),
+        constraints: const BoxConstraints(minHeight: 50),
+        color: (index % 2 == 0) ? null : const Color.fromARGB(255, 230, 230, 230),
         child: Text(
           pokemonName,
           style: Theme.of(context).textTheme.titleMedium,
@@ -131,10 +129,10 @@ class _ListPageState extends State<ListPage> {
     if (details.primaryVelocity != null) {
       final currPageNumber = bloc.state.data.pageNumber;
       if (details.primaryVelocity! < 0) {
-        bloc.add(ShowNextPageEvent());
+        bloc.add(const ShowNextPageEvent());
       } else {
         if (currPageNumber > 1) {
-          bloc.add(ShowPrevPageEvent());
+          bloc.add(const ShowPrevPageEvent());
         }
       }
     }
@@ -143,7 +141,7 @@ class _ListPageState extends State<ListPage> {
   Future<void> _onSelectPagePressed(BuildContext context) async {
     final pageNumber = await showDialog<int?>(
       context: context,
-      builder: (context) => PageNumberInputDialog(),
+      builder: (context) => const PageNumberInputDialog(),
     );
 
     if (pageNumber != null) {

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_test_task/app/contracts/service/i_pokemon_service.dart';
@@ -13,7 +11,7 @@ class DetailsPage extends StatefulWidget {
   final int pageNumber;
   final int entryNumber;
 
-  DetailsPage({
+  const DetailsPage({
     required this.service,
     required this.pageNumber,
     required this.entryNumber,
@@ -32,7 +30,7 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
     bloc = DetailsBloc(
       service: widget.service,
-      initialState: DetailsState.loading()
+      initialState: const DetailsState.loading()
     )..add(ShowPokemonEvent(widget.pageNumber, widget.entryNumber));
   }
 
@@ -68,9 +66,9 @@ class _DetailsPageState extends State<DetailsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Data is unavalialbe'),
+          const Text('Data is unavalialbe'),
           IconButton(
-            icon: Icon(Icons.replay),
+            icon: const Icon(Icons.replay),
             onPressed: () => bloc.add(ShowPokemonEvent(widget.pageNumber, widget.entryNumber)),
           )
         ],
@@ -79,7 +77,7 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _buildLoadingState(BuildContext context, DetailsState state) {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
@@ -91,16 +89,16 @@ class _DetailsPageState extends State<DetailsPage> {
         Expanded(
           flex: 2,
           child: Container(
-            padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
             alignment: Alignment.center,
             child: AspectRatio(
               aspectRatio: 1,
               child: Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   border: Border.all(),
-                  color: Color.fromARGB(255, 240, 240, 240)
+                  color: const Color.fromARGB(255, 240, 240, 240)
                 ),
                 child: Image.memory(pokemon.image),
               ),
@@ -108,7 +106,7 @@ class _DetailsPageState extends State<DetailsPage> {
           )
         ),
         Container(
-          margin: EdgeInsets.only(bottom: 30),
+          margin: const EdgeInsets.only(bottom: 30),
           child: Text(
             pokemon.name,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -119,7 +117,7 @@ class _DetailsPageState extends State<DetailsPage> {
         Expanded(
           flex: 3,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Table(
               children: [
                 _buildTableRow(context, 'Type(s)', _getTypesString(pokemon.types)),
@@ -137,7 +135,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return TableRow(
       children: [
         Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.center,
           child: Text(
             key,
@@ -149,7 +147,7 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ),
         Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
           child: Text(
             value,

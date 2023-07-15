@@ -8,10 +8,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'pokemon_data_model.dart';
 
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
-
 class PokemonDataModelAdapter extends TypeAdapter<PokemonDataModel> {
   @override
   final int typeId = 0;

@@ -1,10 +1,8 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class PageNumberInputDialog extends StatefulWidget {
-  PageNumberInputDialog({super.key});
+  const PageNumberInputDialog({super.key});
 
   @override
   State<StatefulWidget> createState() => _PageNumberInputDialogState();
@@ -28,7 +26,7 @@ class _PageNumberInputDialogState extends State<PageNumberInputDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Enter page number'),
+      title: const Text('Enter page number'),
       content: TextField(
         controller: _controller,
         onSubmitted: (value) {
@@ -43,8 +41,8 @@ class _PageNumberInputDialogState extends State<PageNumberInputDialog> {
       actions: [
         TextButton.icon(
           onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.close),
-          label: Text('Cancel'),
+          icon: const Icon(Icons.close),
+          label: const Text('Cancel'),
         )
       ],
     );

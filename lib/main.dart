@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable, prefer_const_constructors, prefer_const_declarations
-
 import 'package:flutter/material.dart';
 import 'package:pokemon_test_task/app/services/pokemon_service.dart';
 import 'package:pokemon_test_task/data/local_cache.dart';
