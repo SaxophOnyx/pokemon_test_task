@@ -7,6 +7,7 @@ import 'package:pokemon_test_task/ui/blocs/list_bloc/list_bloc.dart';
 import 'package:pokemon_test_task/ui/blocs/list_bloc/list_events.dart';
 import 'package:pokemon_test_task/ui/blocs/list_bloc/list_state.dart';
 import 'package:pokemon_test_task/ui/pages/details_page.dart';
+import 'package:pokemon_test_task/ui/widgets/page_number_input_dialog.dart';
 
 class ListPage extends StatefulWidget {
   final IPokemonService service;
@@ -68,6 +69,11 @@ class _ListPageState extends State<ListPage> {
 
             return _buildNormalState(context, state);
           },
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => _onSelectPagePressed(context),
+          shape: BeveledRectangleBorder(),
+          label: Text('Select Page'),
         )
       ),
     );
@@ -141,6 +147,17 @@ class _ListPageState extends State<ListPage> {
           bloc.add(ShowPrevPageEvent());
         }
       }
+    }
+  }
+
+  Future<void> _onSelectPagePressed(BuildContext context) async {
+    final pageNumber = await showDialog<int?>(
+      context: context,
+      builder: (context) => PageNumberInputDialog(),
+    );
+
+    if (pageNumber != null) {
+      bloc.add(ShowExactPageEvent(pageNumber));
     }
   }
 }
