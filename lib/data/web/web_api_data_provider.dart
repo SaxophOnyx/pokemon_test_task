@@ -31,15 +31,20 @@ class WebApiDataProvider implements IDataProvider {
   }
 
   @override
-  Future<Pokemon> fetchDetails(int offset) async {
+  Future<Pokemon?> fetchPokemon(int offset) async {
     if (offset < 0) {
       throw DataFetchError();
     }
 
     try {
       final detailsUri = Uri.parse('$rootUri/${offset + 1}');
-      final raw = await http.read(detailsUri);
-      final decoded = jsonDecode(raw);
+      final response = await http.get(detailsUri);
+
+      if (response.statusCode == 404) {
+        return null;
+      }
+
+      final decoded = jsonDecode(response.body);
 
       final String name = decoded['name'];
       final double weight = decoded['weight'] / 10;
