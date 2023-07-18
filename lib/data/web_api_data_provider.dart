@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:pokemon_test_task/app/contracts/data/data_fetch_error.dart';
+import 'package:pokemon_test_task/domain/services/contracts/data_fetch_error.dart';
 
-import 'package:pokemon_test_task/app/contracts/data/i_data_provider.dart';
-import 'package:pokemon_test_task/domain/pokemon.dart';
-import 'package:pokemon_test_task/domain/pokemon_type.dart';
+import 'package:pokemon_test_task/domain/services/contracts/i_data_provider.dart';
+import 'package:pokemon_test_task/domain/models/pokemon.dart';
+import 'package:pokemon_test_task/domain/models/pokemon_type.dart';
 
 class WebApiDataProvider implements IDataProvider {
   final String rootUri;

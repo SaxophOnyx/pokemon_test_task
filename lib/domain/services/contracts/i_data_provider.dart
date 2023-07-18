@@ -1,4 +1,4 @@
-import 'package:pokemon_test_task/domain/pokemon.dart';
+import 'package:pokemon_test_task/domain/models/pokemon.dart';
 
 abstract class IDataProvider {
   Future<List<String>> fetchNames(int offset, int limit);

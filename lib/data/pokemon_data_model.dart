@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:hive/hive.dart';
-import 'package:pokemon_test_task/domain/pokemon.dart';
-import 'package:pokemon_test_task/domain/pokemon_type.dart';
+import 'package:pokemon_test_task/domain/models/pokemon.dart';
+import 'package:pokemon_test_task/domain/models/pokemon_type.dart';
 
 @HiveType(typeId: 0)
 class PokemonDataModel {

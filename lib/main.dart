@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_test_task/app/services/pokemon_service.dart';
+import 'package:pokemon_test_task/domain/services/pokemon_service.dart';
 import 'package:pokemon_test_task/data/local_cache.dart';
 import 'package:pokemon_test_task/data/pokemon_data_model_adapter.g.dart';
 import 'package:pokemon_test_task/data/web_api_data_provider.dart';

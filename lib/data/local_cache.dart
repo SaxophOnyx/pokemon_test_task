@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
-import 'package:pokemon_test_task/app/contracts/data/data_fetch_error.dart';
-import 'package:pokemon_test_task/app/contracts/data/i_data_provider.dart';
-import 'package:pokemon_test_task/app/contracts/service/pokemon_not_found_error.dart';
+import 'package:pokemon_test_task/domain/services/contracts/data_fetch_error.dart';
+import 'package:pokemon_test_task/domain/services/contracts/i_data_provider.dart';
+import 'package:pokemon_test_task/domain/services/errors/pokemon_not_found_error.dart';
 import 'package:pokemon_test_task/data/pokemon_data_model.dart';
-import 'package:pokemon_test_task/domain/pokemon.dart';
+import 'package:pokemon_test_task/domain/models/pokemon.dart';
 
 class LocalCache implements IDataProvider {
   final IDataProvider dataProvider;

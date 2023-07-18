@@ -1,4 +1,4 @@
-import 'package:pokemon_test_task/domain/pokemon.dart';
+import 'package:pokemon_test_task/domain/models/pokemon.dart';
 import 'package:pokemon_test_task/ui/blocs/common/state_template.dart';
 
 class DetailsState extends StateTemplate<DetailsData, ErrorInfo> {

@@ -1,4 +1,4 @@
-import 'package:pokemon_test_task/domain/pokemon.dart';
+import 'package:pokemon_test_task/domain/models/pokemon.dart';
 
 abstract class IPokemonService {
   Future<List<String>> fetchPokemonNamesFromPage(int pageNumber);

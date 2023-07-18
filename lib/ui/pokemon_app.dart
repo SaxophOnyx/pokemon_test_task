@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_test_task/app/contracts/service/i_pokemon_service.dart';
+import 'package:pokemon_test_task/domain/services/i_pokemon_service.dart';
 import 'package:pokemon_test_task/ui/pages/list_page.dart';
 
 class PokemonApp extends StatelessWidget{

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokemon_test_task/app/contracts/service/i_pokemon_service.dart';
-import 'package:pokemon_test_task/domain/pokemon_type.dart';
+import 'package:pokemon_test_task/domain/services/i_pokemon_service.dart';
+import 'package:pokemon_test_task/domain/models/pokemon_type.dart';
 import 'package:pokemon_test_task/ui/blocs/details_bloc/details_bloc.dart';
 import 'package:pokemon_test_task/ui/blocs/details_bloc/details_events.dart';
 import 'package:pokemon_test_task/ui/blocs/details_bloc/details_state.dart';

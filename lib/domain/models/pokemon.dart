@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:pokemon_test_task/domain/pokemon_type.dart';
+import 'package:pokemon_test_task/domain/models/pokemon_type.dart';
 
 class Pokemon {
   final String name;

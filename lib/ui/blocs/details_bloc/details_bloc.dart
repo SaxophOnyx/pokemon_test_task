@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokemon_test_task/app/contracts/service/i_pokemon_service.dart';
-import 'package:pokemon_test_task/app/contracts/service/pokemon_not_found_error.dart';
+import 'package:pokemon_test_task/domain/services/i_pokemon_service.dart';
+import 'package:pokemon_test_task/domain/services/errors/pokemon_not_found_error.dart';
 import 'package:pokemon_test_task/ui/blocs/common/state_template.dart';
 import 'package:pokemon_test_task/ui/blocs/details_bloc/details_events.dart';
 import 'package:pokemon_test_task/ui/blocs/details_bloc/details_state.dart';
