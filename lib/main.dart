@@ -12,7 +12,6 @@ Future<void> main() async {
   
   final dataProvider = WebApiDataProvider('https://pokeapi.co/api/v2/pokemon');
   final cache = LocalCache('test-task-v2');
-  await cache.deleteFromDisk();
   final service = PokemonService(dataProvider: dataProvider, cache: cache);
 
   final app = PokemonApp(service: service);
