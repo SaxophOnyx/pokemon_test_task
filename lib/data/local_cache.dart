@@ -25,7 +25,7 @@ class LocalCache implements IDataProvider {
       try {
         final names = await dataProvider.fetchNames(offset, limit);
         final map = <int, String>{};
-        for (int i = 0; i < limit; ++i) {
+        for (int i = 0; i < names.length; ++i) {
           map[offset + i] = names[i];
         }
 
