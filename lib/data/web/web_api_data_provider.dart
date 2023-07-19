@@ -24,7 +24,7 @@ class WebApiDataProvider implements IDataProvider {
       final raw = await http.read(targetUri);
       final decoded = jsonDecode(raw);
       final pokemons = decoded['results'] as List<dynamic>;
-      return List<String>.generate(pokemons.length, (i) => pokemons[i]['name']);
+      return pokemons.map<String>((i) => i['name']).toList();
     } catch(e) {
       throw DataFetchError();
     }
@@ -49,12 +49,11 @@ class WebApiDataProvider implements IDataProvider {
       final String name = decoded['name'];
       final double weight = decoded['weight'] / 10;
       final int height = decoded['height'] * 10;
-      final List<PokemonType> types = List.empty(growable: true);
 
       final rawTypes = decoded['types'] as List<dynamic>;
-      for (var t in rawTypes) {
-        types.add(PokemonType.fromName(t['type']['name']));
-      }
+      final types = rawTypes
+        .map((i) => PokemonType.fromName(i['type']['name']))
+        .toList();
 
       final imageUri = Uri.parse(decoded['sprites']['front_default']);
       final image = await http.readBytes(imageUri);

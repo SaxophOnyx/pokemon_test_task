@@ -26,7 +26,7 @@ class PokemonDataModel {
   );
 
   factory PokemonDataModel.fromModel(Pokemon pokemon) {
-    final list = List<String>.generate(pokemon.types.length, (i) => pokemon.types[i].toString());
+    final list = pokemon.types.map((i) => i.toString()).toList();
     return PokemonDataModel(
       pokemon.name, list, pokemon.weight, pokemon.height, pokemon.image
     );
@@ -35,7 +35,7 @@ class PokemonDataModel {
   Pokemon toModel() {
     return Pokemon(
       name: name,
-      types: List.generate(types.length, (i) => PokemonType.fromString(types[i])),
+      types: types.map(PokemonType.fromString).toList(),
       weight: weight,
       height: height,
       image: image
