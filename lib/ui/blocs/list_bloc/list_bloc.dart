@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_test_task/domain/services/errors/data_error.dart';
 import 'package:pokemon_test_task/domain/services/i_pokemon_service.dart';
 import 'package:pokemon_test_task/domain/services/errors/page_not_found_error.dart';
 import 'package:pokemon_test_task/ui/blocs/common/state_template.dart';
@@ -16,34 +19,68 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   }
 
   Future<void> _onShowNextPageEvent(ShowNextPageEvent event, Emitter<ListState> emitter) async {
+    emitter.call(state.copyWith(isLoading: true, error: null));
+
     final int nextPageNumber = state.data.pageNumber + 1;
-    return await _handleFetchOfPage(nextPageNumber, emitter);
+    final names = await _handleFetchingPokemonNames(nextPageNumber, emitter);
+
+    if (names != null) {
+      emitter.call(ListState(
+        data: ListData(
+          pageNumber: nextPageNumber,
+          // pokemonNames: List.from(state.data.pokemonNames)..addAll(names)
+          pokemonNames: names
+        )
+      ));
+    }
   }
 
   Future<void> _onShowPrevPageEvent(ShowPrevPageEvent event, Emitter<ListState> emitter) async {
+    emitter.call(state.copyWith(isLoading: true, error: null));
+
     final int prevPageNumber = state.data.pageNumber - 1;
-    return await _handleFetchOfPage(prevPageNumber, emitter);
+    final names = await _handleFetchingPokemonNames(prevPageNumber, emitter);
+
+    if (names != null) {
+      emitter.call(ListState(
+        data: ListData(
+          pageNumber: prevPageNumber,
+          // pokemonNames: List.from(names)..addAll(state.data.pokemonNames)
+          pokemonNames: names
+        )
+      ));
+    }
   }
 
   Future<void> _onShowExactPageEvent(ShowExactPageEvent event, Emitter<ListState> emitter) async {
-    return await _handleFetchOfPage(event.pageNumber, emitter);
+    emitter.call(state.copyWith(isLoading: true, error: null));
+
+    final names = await _handleFetchingPokemonNames(event.pageNumber, emitter);
+
+    if (names != null) {
+      emitter.call(ListState(
+        data: ListData(
+          pageNumber: event.pageNumber,
+          pokemonNames: names
+        )
+      ));
+    }
   }
 
-  Future<void> _handleFetchOfPage(int pageNumber, Emitter<ListState> emitter) async {
-    emitter.call(ListState.loading());
+  Future<List<String>?> _handleFetchingPokemonNames(int pageNumber, Emitter<ListState> emitter) async {
     try {
-      final names = await service.fetchPokemonNamesFromPage(pageNumber);
-      final newState = ListState(
-        data: ListData(pageNumber: pageNumber, pokemonNames: names)
-      );
+      return await service.fetchPokemonNamesFromPage(pageNumber);
 
-      emitter.call(newState);
     } on PageNotFoundError {
-      final errorState = ListState.error(errorInfo: ErrorInfo('Page number $pageNumber not found'));
-      emitter.call(errorState);
+      emitter.call(ListState.error(errorInfo: ErrorInfo('Page $pageNumber not found')));
+
+    } on DataError {
+      emitter.call(ListState.error(errorInfo: ErrorInfo('Data error occured')));
+
     } catch(e) {
-      final errorState = ListState.error(errorInfo: const ErrorInfo('Unknown error occured'));
-      emitter.call(errorState);
+      emitter.call(ListState.error(errorInfo: ErrorInfo('Unknown error occured')));
     }
+
+    return null;
   }
 }

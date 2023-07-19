@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class StateTemplate<D extends Data, E extends ErrorInfo> {
+  bool get hasErrors => error != null;
+
   final D data;
   final E? error;
   final bool isLoading;

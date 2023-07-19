@@ -9,9 +9,11 @@ import 'package:pokemon_test_task/domain/services/errors/pokemon_not_found_error
 import 'package:pokemon_test_task/domain/models/pokemon.dart';
 
 class PokemonService implements IPokemonService {
+  @override
+  final int maxPageSize;
+
   final IDataProvider dataProvider;
   final IDataCache cache;
-  final int maxPageSize;
 
   const PokemonService({
     required this.dataProvider,

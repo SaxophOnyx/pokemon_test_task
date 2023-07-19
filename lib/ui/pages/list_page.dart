@@ -6,6 +6,7 @@ import 'package:pokemon_test_task/ui/blocs/list_bloc/list_events.dart';
 import 'package:pokemon_test_task/ui/blocs/list_bloc/list_state.dart';
 import 'package:pokemon_test_task/ui/pages/details_page.dart';
 import 'package:pokemon_test_task/ui/widgets/page_number_input_dialog.dart';
+import 'package:pokemon_test_task/ui/widgets/paginated_listview.dart';
 
 class ListPage extends StatefulWidget {
   final IPokemonService service;
@@ -36,68 +37,71 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _appBarBuilder(context),
+      body: _bodyBuilder(context),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _onSelectPagePressed(context),
+        shape: const BeveledRectangleBorder(),
+        label: const Text('Select Page'),
+      )
+    );
+  }
+
+  AppBar _appBarBuilder(BuildContext context) {
+    return AppBar(
+      title: BlocBuilder<ListBloc, ListState>(
+        bloc: bloc,
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Text('Loading...');
+          }
+
+          if (state.hasErrors) {
+            return const Text('Error...');
+          }
+
+          return Text('Page ${state.data.pageNumber}');
+        },
+      )
+    );
+  }
+
+  Widget _bodyBuilder(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: BlocBuilder<ListBloc, ListState>(
-            bloc: bloc,
-            builder: (context, state) {
-              if (state.isLoading) {
-                return const Text('Loading...');
-              }
-
-              if (state.error != null) {
-                return const Text('Error...');
-              }
-
-              return Text('Page ${state.data.pageNumber}');
-            },
-          ),
-        ),
-        body: BlocBuilder<ListBloc, ListState>(
-          bloc: bloc,
-          builder: (context, state) {
-            if (state.isLoading) {
-              return _buildLoadingState(context, state);
-            }
-
-            if (state.error != null) {
-              return _buildErrorState(context, state);
-            }
-
-            return _buildNormalState(context, state);
-          },
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => _onSelectPagePressed(context),
-          shape: const BeveledRectangleBorder(),
-          label: const Text('Select Page'),
-        )
-      ),
-    );
-  }
-
-  Widget _buildLoadingState(BuildContext context, ListState state) {
-    return const Center(
-      child: CircularProgressIndicator()
-    );
-  }
-
-  Widget _buildErrorState(BuildContext context, ListState state) {
-    return Center(
-      child: Text(
-        'Page Not Found',
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
-    );
-  }
-
-  Widget _buildNormalState(BuildContext context, ListState state) {
-    return GestureDetector(
-      onHorizontalDragEnd: (details) => _onListHorizontalDragEnd(context, details),
-      child: ListView.builder(
-        itemCount: state.data.pokemonNames.length,
-        itemBuilder: (context, index) => _buildListItem(context, index, state.data.pokemonNames[index])
+      child: BlocBuilder<ListBloc, ListState>(
+        bloc: bloc,
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+    
+          if (state.hasErrors) {
+            return Center(
+              child: Text(
+                state.error!.message,
+                style: Theme.of(context).textTheme.titleLarge
+              )
+            );
+          }
+    
+          return Column(
+            children: [
+              Expanded(
+                child: PaginatedListView(
+                  itemsCount: state.data.pokemonNames.length,
+                  itemBuilder: (context, index) => _buildListItem(context, index, state.data.pokemonNames[index]),
+                  onPrevPageRequested: () {
+                    if (bloc.state.data.pageNumber > 1) {
+                      bloc.add(const ShowPrevPageEvent());
+                    }
+                  },
+                  onNextPageRequested: () => bloc.add(const ShowNextPageEvent()),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -123,19 +127,6 @@ class _ListPageState extends State<ListPage> {
         ),
       ),
     );
-  }
-
-  void _onListHorizontalDragEnd(BuildContext context, DragEndDetails details) {
-    if (details.primaryVelocity != null) {
-      final currPageNumber = bloc.state.data.pageNumber;
-      if (details.primaryVelocity! < 0) {
-        bloc.add(const ShowNextPageEvent());
-      } else {
-        if (currPageNumber > 1) {
-          bloc.add(const ShowPrevPageEvent());
-        }
-      }
-    }
   }
 
   Future<void> _onSelectPagePressed(BuildContext context) async {

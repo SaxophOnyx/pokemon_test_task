@@ -12,6 +12,14 @@ class ListState extends StateTemplate<ListData, ErrorInfo> {
 
   ListState.error({ErrorInfo? errorInfo})
     : super(data: ListData.empty(), error: errorInfo ?? const ErrorInfo.empty());
+
+  ListState copyWith({ListData? data, ErrorInfo? error, bool? isLoading}) {
+    return ListState(
+      data: data ?? this.data,
+      error: error ?? this.error,
+      isLoading: isLoading ?? this.isLoading
+    );
+  }
 }
 
 class ListData extends Data {
