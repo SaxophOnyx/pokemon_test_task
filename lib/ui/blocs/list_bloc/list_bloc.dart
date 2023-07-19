@@ -22,7 +22,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     emitter.call(state.copyWith(isLoading: true, error: null));
 
     final int nextPageNumber = state.data.pageNumber + 1;
-    final names = await _handleFetchingPokemonNames(nextPageNumber, emitter);
+    final names = await _handlePokemonNamesFetching(nextPageNumber, emitter);
 
     if (names != null) {
       emitter.call(ListState(
@@ -39,7 +39,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     emitter.call(state.copyWith(isLoading: true, error: null));
 
     final int prevPageNumber = state.data.pageNumber - 1;
-    final names = await _handleFetchingPokemonNames(prevPageNumber, emitter);
+    final names = await _handlePokemonNamesFetching(prevPageNumber, emitter);
 
     if (names != null) {
       emitter.call(ListState(
@@ -55,7 +55,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   Future<void> _onShowExactPageEvent(ShowExactPageEvent event, Emitter<ListState> emitter) async {
     emitter.call(state.copyWith(isLoading: true, error: null));
 
-    final names = await _handleFetchingPokemonNames(event.pageNumber, emitter);
+    final names = await _handlePokemonNamesFetching(event.pageNumber, emitter);
 
     if (names != null) {
       emitter.call(ListState(
@@ -67,7 +67,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     }
   }
 
-  Future<List<String>?> _handleFetchingPokemonNames(int pageNumber, Emitter<ListState> emitter) async {
+  Future<List<String>?> _handlePokemonNamesFetching(int pageNumber, Emitter<ListState> emitter) async {
     try {
       return await service.fetchPokemonNamesFromPage(pageNumber);
 

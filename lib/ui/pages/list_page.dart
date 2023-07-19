@@ -7,6 +7,7 @@ import 'package:pokemon_test_task/ui/blocs/list_bloc/list_state.dart';
 import 'package:pokemon_test_task/ui/pages/details_page.dart';
 import 'package:pokemon_test_task/ui/widgets/page_number_input_dialog.dart';
 import 'package:pokemon_test_task/ui/widgets/paginated_listview.dart';
+import 'package:pokemon_test_task/ui/widgets/pokemon_card.dart';
 
 class ListPage extends StatefulWidget {
   final IPokemonService service;
@@ -90,7 +91,13 @@ class _ListPageState extends State<ListPage> {
               Expanded(
                 child: PaginatedListView(
                   itemsCount: state.data.pokemonNames.length,
-                  itemBuilder: (context, index) => _buildListItem(context, index, state.data.pokemonNames[index]),
+                  itemBuilder: (context, index) {
+                    return PokemonCard(
+                      pokemonName: state.data.pokemonNames[index],
+                      onTap: () => _onListItemTap(state.data.pageNumber, index),
+                      color: (index % 2 == 0) ? null : const Color.fromARGB(255, 230, 230, 230),
+                    );
+                  },
                   onPrevPageRequested: () {
                     if (bloc.state.data.pageNumber > 1) {
                       bloc.add(const ShowPrevPageEvent());
@@ -106,29 +113,6 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  Widget _buildListItem(BuildContext context, int index, String pokemonName) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => DetailsPage(
-            service: widget.service,
-            pageNumber: bloc.state.data.pageNumber,
-            entryNumber: index + 1,
-          ),
-        ));
-      },
-      child: Container(
-        alignment: Alignment.center,
-        constraints: const BoxConstraints(minHeight: 50),
-        color: (index % 2 == 0) ? null : const Color.fromARGB(255, 230, 230, 230),
-        child: Text(
-          pokemonName,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-    );
-  }
-
   Future<void> _onSelectPagePressed(BuildContext context) async {
     final pageNumber = await showDialog<int?>(
       context: context,
@@ -138,5 +122,15 @@ class _ListPageState extends State<ListPage> {
     if (pageNumber != null) {
       bloc.add(ShowExactPageEvent(pageNumber));
     }
+  }
+
+  void _onListItemTap(int pageNumber, int itemIndex) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => DetailsPage(
+        service: widget.service,
+        pageNumber: bloc.state.data.pageNumber,
+        entryNumber: itemIndex + 1,
+      ),
+    ));
   }
 }
