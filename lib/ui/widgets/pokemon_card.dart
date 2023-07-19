@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 class PokemonCard extends StatelessWidget {
@@ -7,7 +5,7 @@ class PokemonCard extends StatelessWidget {
   final void Function()? onTap;
   final Color? color;
 
-  PokemonCard({
+  const PokemonCard({
     super.key,
     required this.pokemonName,
     this.onTap,
@@ -19,8 +17,8 @@ class PokemonCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        constraints: BoxConstraints(minHeight: 60),
-        padding: EdgeInsets.all(15),
+        constraints: const BoxConstraints(minHeight: 60),
+        padding: const EdgeInsets.all(15),
         color: color,
         child: Align(
           alignment: Alignment.centerLeft,

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_test_task/domain/services/errors/data_error.dart';
 import 'package:pokemon_test_task/domain/services/i_pokemon_service.dart';
@@ -28,7 +26,6 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emitter.call(ListState(
         data: ListData(
           pageNumber: nextPageNumber,
-          // pokemonNames: List.from(state.data.pokemonNames)..addAll(names)
           pokemonNames: names
         )
       ));
@@ -45,7 +42,6 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emitter.call(ListState(
         data: ListData(
           pageNumber: prevPageNumber,
-          // pokemonNames: List.from(names)..addAll(state.data.pokemonNames)
           pokemonNames: names
         )
       ));
@@ -75,10 +71,10 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       emitter.call(ListState.error(errorInfo: ErrorInfo('Page $pageNumber not found')));
 
     } on DataError {
-      emitter.call(ListState.error(errorInfo: ErrorInfo('Data error occured')));
+      emitter.call(ListState.error(errorInfo: const ErrorInfo('Data error occured')));
 
     } catch(e) {
-      emitter.call(ListState.error(errorInfo: ErrorInfo('Unknown error occured')));
+      emitter.call(ListState.error(errorInfo: const ErrorInfo('Unknown error occured')));
     }
 
     return null;

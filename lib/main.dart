@@ -11,7 +11,7 @@ Future<void> main() async {
   Hive.registerAdapter(PokemonDataModelAdapter());
   
   final dataProvider = WebApiDataProvider('https://pokeapi.co/api/v2/pokemon');
-  final cache = LocalCache('test-task-v2');
+  final cache = LocalCache('test-task');
   final service = PokemonService(dataProvider: dataProvider, cache: cache);
 
   final app = PokemonApp(service: service);

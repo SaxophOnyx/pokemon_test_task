@@ -30,10 +30,8 @@ class PaginatedListView extends StatelessWidget {
 
     if (velocity != null) {
       if (velocity.pixelsPerSecond.dy < 0) {
-        debugPrint('Requesting NEXT page...');
         onNextPageRequested();
       } else if (velocity.pixelsPerSecond.dy > 0) {
-        debugPrint('Requesting PREV page...');
         onPrevPageRequested();
       }
     }

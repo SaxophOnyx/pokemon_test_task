@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:pokemon_test_task/domain/models/pokemon.dart';
 import 'package:pokemon_test_task/domain/models/pokemon_type.dart';
@@ -7,7 +5,7 @@ import 'package:pokemon_test_task/domain/models/pokemon_type.dart';
 class PokemonInfoTable extends StatelessWidget {
   final Pokemon pokemon;
 
-  PokemonInfoTable(this.pokemon, {super.key});
+  const PokemonInfoTable(this.pokemon, {super.key});
 
   @override
   Widget build(BuildContext context) {

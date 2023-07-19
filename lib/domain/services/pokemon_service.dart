@@ -28,6 +28,7 @@ class PokemonService implements IPokemonService {
 
     try {
       fetchedNames = await dataProvider.fetchNames(offset, maxPageSize);
+      
       if (fetchedNames.isEmpty) {
         throw PageNotFoundError();
       }
@@ -60,6 +61,7 @@ class PokemonService implements IPokemonService {
 
     try {
       pokemon = await dataProvider.fetchPokemon(offset);
+
       if (pokemon == null) {
         throw PokemonNotFoundError();
       }

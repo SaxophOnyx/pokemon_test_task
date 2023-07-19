@@ -66,7 +66,10 @@ class _DetailsPageState extends State<DetailsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Data is unavalialbe'),
+          Text(
+            'Data is unavalialbe',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           IconButton(
             icon: const Icon(Icons.replay),
             onPressed: () => bloc.add(ShowPokemonEvent(widget.pageNumber, widget.entryNumber)),
